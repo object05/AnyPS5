@@ -27,6 +27,7 @@ long long APS5_VABI wcstol_nid_postfix(const char16_t* str, char16_t** endptr, i
 long long APS5_VABI wcstoll_nid_postfix(const char16_t* str, char16_t** endptr, int base);
 unsigned long long APS5_VABI wcstoul_nid_postfix(const char16_t* str, char16_t** endptr, int base);
 unsigned long long APS5_VABI wcstoull_nid_postfix(const char16_t* str, char16_t** endptr, int base);
+unsigned long long APS5_VABI _WStoul_nid_postfix(const char16_t* str, char16_t** endptr, int base);
 int APS5_VABI wcscoll_nid_postfix(const char16_t* first, const char16_t* second);
 std::size_t APS5_VABI wcsxfrm_nid_postfix(char16_t* destination, const char16_t* source, std::size_t count);
 }
@@ -119,6 +120,8 @@ int main() {
     const char16_t* hex = u"0x1F!";
     require(wcstoll_nid_postfix(hex, &end, 16) == 31 && end == hex + 4);
     require(wcstoll_nid_postfix(hex, &end, 0) == 31 && end == hex + 4);
+    end = nullptr;
+    require(_WStoul_nid_postfix(hex, &end, 16) == 31 && end == hex + 4);
     const char16_t* wideSpace = u"　12";
     require(wcstoul_nid_postfix(wideSpace, &end, 10) == 0 && end == wideSpace);
     const char16_t* wideDigit = u"12١";

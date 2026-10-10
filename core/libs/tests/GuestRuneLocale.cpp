@@ -35,6 +35,7 @@ int APS5_VABI iswspace_nid_postfix(std::uint32_t);
 int APS5_VABI iswupper_nid_postfix(std::uint32_t);
 int APS5_VABI iswxdigit_nid_postfix(std::uint32_t);
 int APS5_VABI iswctype_nid_postfix(std::uint32_t, std::uint64_t);
+int APS5_VABI _Iswctype_nid_postfix(std::uint32_t, std::uint64_t);
 std::uint64_t APS5_VABI wctype_nid_postfix(const char*);
 std::uint32_t APS5_VABI towlower_nid_postfix(std::uint32_t);
 std::uint32_t APS5_VABI towupper_nid_postfix(std::uint32_t);
@@ -109,6 +110,7 @@ int main() {
             const int expected = c < 256 && (entry.narrow ? entry.narrow(static_cast<int>(c)) : isalpha_nid_postfix(static_cast<int>(c)) || isdigit_nid_postfix(static_cast<int>(c)));
             Require((entry.wide(c) != 0) == (expected != 0));
             Require((iswctype_nid_postfix(c, entry.mask) != 0) == (expected != 0));
+            Require((_Iswctype_nid_postfix(c, entry.mask) != 0) == (expected != 0));
         }
         Require(entry.wide(0xffffffff) == 0 && iswctype_nid_postfix(0xffffffff, entry.mask) == 0);
     }
